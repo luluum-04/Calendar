@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✦ Calendario Femme Fatale ✦</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Fondo de corcho -->
+        <div class="cork-board"></div>
+        
+        <!-- Chinchetas decorativas - solo 2 en la parte superior -->
+        <div class="pin pin-1"></div>
+        <div class="pin pin-2"></div>
+
+        <!-- Sección de foto principal (izquierda) -->
+        <div class="photo-section">
+            <div class="photo-frame">
+                <div class="photo-container" id="photoContainer">
+                    <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&h=900&fit=crop" alt="Fashion photo" id="mainPhoto">
+                    <div class="photo-pin-large"></div>
+                    <div class="photo-pin-large pin-bottom"></div>
+                </div>
+                <div class="photo-caption">
+                    <span class="caption-text">✦ Élégance éternelle ✦</span>
+                </div>
+                <button id="changePhotoBtn" class="btn photo-btn">Cambiar Foto</button>
+                <input type="file" id="photoUpload" accept="image/*" style="display:none">
+            </div>
+        </div>
+
+        <!-- Sección del calendario (derecha superior) -->
+        <div class="calendar-section">
+            <header>
+                <div class="header-left">
+                    <div class="logo-section">
+                        <span class="logo-icon">✦</span>
+                        <h1 class="brand-title">Calendario</h1>
+                        <span class="logo-icon">✦</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="addEventBtn" class="btn btn-primary vintage-primary">+ Nuevo Evento</button>
+                </div>
+            </header>
+
+            <div class="nav-section">
+                <button id="todayBtn" class="btn vintage-btn">Hoy</button>
+                <div class="nav-buttons">
+                    <button id="prevBtn" class="btn-icon vintage-icon">‹</button>
+                    <button id="nextBtn" class="btn-icon vintage-icon">›</button>
+                </div>
+                <h2 id="currentMonth" class="month-display"></h2>
+            </div>
+
+            <div class="calendar-wrapper">
+                <div class="calendar-grid">
+                    <div class="weekdays">
+                        <div>Dom</div>
+                        <div>Lun</div>
+                        <div>Mar</div>
+                        <div>Mié</div>
+                        <div>Jue</div>
+                        <div>Vie</div>
+                        <div>Sáb</div>
+                    </div>
+                    <div id="calendarDays" class="days-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notas adhesivas decorativas -->
+        <div class="sticky-note note-1">
+            <p>✨"Tú eres</p>
+            <p>la mejor versión</p>
+            <p>de tí misma" ✨</p>
+        </div>
+        
+
+        <!-- Modal para eventos -->
+        <div id="eventModal" class="modal vintage-modal">
+            <div class="modal-content vintage-modal-content">
+                <span class="close vintage-close">&times;</span>
+                <div class="modal-header">
+                    <h2 id="modalTitle" class="modal-title">Agregar Evento</h2>
+                    <div class="divider-line"></div>
+                </div>
+                <form id="eventForm">
+                    <input type="hidden" id="eventId">
+                    <div class="form-group vintage-form">
+                        <label for="eventTitle">Título</label>
+                        <input type="text" id="eventTitle" required placeholder="Nombre del evento..." class="vintage-input">
+                    </div>
+                    <div class="form-group vintage-form">
+                        <label for="eventDate">Fecha</label>
+                        <input type="date" id="eventDate" required class="vintage-input">
+                    </div>
+                    <div class="form-group vintage-form">
+                        <label for="eventTime">Hora</label>
+                        <input type="time" id="eventTime" class="vintage-input">
+                    </div>
+                    <div class="form-group vintage-form">
+                        <label for="eventDescription">Descripción</label>
+                        <textarea id="eventDescription" placeholder="Detalles del evento..." rows="3" class="vintage-input"></textarea>
+                    </div>
+                    <div class="form-group vintage-form">
+                        <label for="eventColor">Color</label>
+                        <select id="eventColor" class="vintage-input vintage-select">
+                            <option value="#c0392b">❤️ Rojo Pasión</option>
+                            <option value="#e74c3c">❤️ Rojo</option>
+                            <option value="#d35400">🧡 Naranja</option>
+                            <option value="#8e44ad">💜 Violeta</option>
+                            <option value="#2c3e50">🖤 Negro</option>
+                            <option value="#7f8c8d">🤍 Gris</option>
+                            <option value="#1a1a2e">🌙 Noche</option>
+                            <option value="#c0392b" selected>🥀 Burdeos</option>
+                        </select>
+                    </div>
+                    <div class="form-actions vintage-actions">
+                        <button type="submit" class="btn btn-primary vintage-primary">💋 Guardar</button>
+                        <button type="button" id="deleteEventBtn" class="btn btn-danger vintage-danger" style="display:none;">🗑️ Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para ver eventos del día -->
+        <div id="eventListModal" class="modal vintage-modal">
+            <div class="modal-content vintage-modal-content">
+                <span class="close vintage-close">&times;</span>
+                <div class="modal-header">
+                    <h2 id="dayEventsTitle" class="modal-title">Eventos del Día</h2>
+                    <div class="divider-line"></div>
+                </div>
+                <div id="dayEventsList" class="events-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
